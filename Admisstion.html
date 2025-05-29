@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - GIET Polytechnic College</title>
+    <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ffeb3b, #03a9f4, #f44336);
+            color: #333;
+        }
+
+        header {
+            background: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            color: #f44336;
+        }
+
+        nav {
+            margin-top: 0.5rem;
+        }
+
+        nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #03a9f4;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #ff5722;
+        }
+
+        main {
+            padding: 3rem 2rem;
+            background-color: #ffffffcc;
+            border-radius: 10px;
+            max-width: 1000px;
+            margin: 2rem auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #d50000;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: #03a9f4;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #0288d1;
+        }
+
+        footer {
+            background: #263238;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>GIET Polytechnic College</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="Admisstion.html">Admissions</a>
+            <a href="payment.html">Fees</a>
+            <a href="Login.html">Login</a>
+            <a href="stats.html">Stats</a>
+            <a href="services.html">Services</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome to GIET Polytechnic College</h2>
+        <p>
+            Shaping futures with excellence in education and innovation. GIET Polytechnic College offers top-quality
+            technical education, modern infrastructure, and a vibrant campus life to help you achieve your career goals.
+        </p>
+        <a href="Admisstion.html"><button class="cta-button" onclick="applyNow()">Apply Now</button></a>
+    </main>
+
+    <footer>
+        &copy; 2025 GIET Polytechnic College | Developed by 💙 Andhra Developers Team
+    </footer>
+    <script>
+    function applyNow() {
+      alert("Thank you for applying! Our admissions team will get in touch with you soon.");
+    }
+  </script>
+</body>
+
+</html>
