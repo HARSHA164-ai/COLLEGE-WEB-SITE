@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Giet Polytechnic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Full Name" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <select id="role" required>
+                <option value="">Select Role</option>
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+            </select><br>
+            <button type="submit">Register</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
+
+    <!-- Your Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_wWNnD_1pvZuahffwDa8hCDje2Aru3B8",
+            authDomain: "harshacollegewebsite.firebaseapp.com",
+            projectId: "harshacollegewebsite",
+            storageBucket: "harshacollegewebsite.firebasestorage.app",
+            messagingSenderId: "568331032925",
+            appId: "1:568331032925:web:725cf04c75452c06ed70b4"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <!-- Registration Script -->
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const message = document.getElementById('message');
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            if (!name || !email || !password || !role) {
+                message.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    return db.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        role: role
+                    });
+                })
+                .then(() => {
+                    message.textContent = "Registration successful!";
+                    registerForm.reset();
+                })
+                .catch((error) => {
+                    message.textContent = error.message;
+                });
+        });
+    </script>
+</body>
+
+</html>
