@@ -3,7 +3,7 @@
 
 <head>
     <title>Faculty Upload</title>
-    <script type="module" src="firebase.js"></script>
+    <script type="module" src="faculty.js"></script>
 </head>
 
 <body>
@@ -25,20 +25,19 @@
         }
         import { db, collection, addDoc } from './firebase.js';
 
-        async function submitVideo() {
-            const link = document.getElementById('videoLink').value;
+async function submitVideo() {
+  const link = document.getElementById('videoLink').value;
 
-            try {
-                await addDoc(collection(db, 'videos'), {
-                    link: link
-                });
-                alert('Video link uploaded successfully!');
-            } catch (error) {
-                console.error('Error uploading video: ', error);
-                alert('Error uploading video');
-            }
-        }
-
+  try {
+    await addDoc(collection(db, 'videos'), {
+      link: link
+    });
+    alert('Video link uploaded successfully!');
+  } catch (error) {
+    console.error('Error uploading video: ', error);
+    alert('Error uploading video');
+  }
+}
     </script>
 </body>
 
