@@ -1,44 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Faculty Upload</title>
-    <script type="module" src="faculty.js"></script>
+  <title>Faculty Upload</title>
 </head>
-
 <body>
-    <h2>Upload Google Drive Video</h2>
-    <input type="text" id="videoLink" placeholder="Paste Google Drive embed link here">
-    <button id="submitBtn">Submit</button>
+  <h3>Upload Google Drive Video</h3>
+  <input type="text" id="videoLink" placeholder="https://drive.google.com/file/d/..." />
+  <button id="submitBtn">Submit</button>
 
-    <script>
-        function submitVideo() {
-            const link = document.getElementById("videoLink").value;
-            db.collection("videos").add({ link: link })
-                .then(() => {
-                    alert("Video link uploaded successfully!");
-                    document.getElementById("videoLink").value = "";
-                })
-                .catch((error) => {
-                    console.error("Error uploading video: ", error);
-                });
-        }
-        import { db, collection, addDoc } from './firebase.js';
-
-async function submitVideo() {
-  const link = document.getElementById('videoLink').value;
-
-  try {
-    await addDoc(collection(db, 'videos'), {
-      link: link
-    });
-    alert('Video link uploaded successfully!');
-  } catch (error) {
-    console.error('Error uploading video: ', error);
-    alert('Error uploading video');
-  }
-}
-    </script>
+  <script type="module" src="faculty.js"></script>
 </body>
-
 </html>
