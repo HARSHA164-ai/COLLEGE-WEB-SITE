@@ -1,15 +1,20 @@
-import { db, collection, addDoc } from './firebase.js';
+import { db } from './firebase.js';  // make sure this path is correct
+import { collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-document.getElementById("submitBtn").addEventListener("click", async function submitVideo() {
-  const link = document.getElementById('videoLink').value;
+window.onload = function () {
+  const submitBtn = document.getElementById("submitBtn");
+  const videoInput = document.getElementById("videoLink");
 
-  try {
-    await addDoc(collection(db, 'videos'), {
-      link: link
-    });
-    alert('Video link uploaded successfully!');
-  } catch (error) {
-    console.error('Error uploading video: ', error);
-    alert('Error uploading video');
-  }
-});
+  submitBtn.addEventListener("click", async function () {
+    const link = videoInput.value;
+
+    try {
+      await addDoc(collection(db, "videos"), {
+        link: link
+      });
+      alert("Video uploaded!");
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  });
+};
