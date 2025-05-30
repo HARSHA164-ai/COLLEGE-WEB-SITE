@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Faculty Upload</title>
+</head>
+
+<body>
+    <h2>Upload Google Drive Video</h2>
+    <input type="text" id="videoLink" placeholder="Paste Google Drive embed link here">
+    <button onclick="submitVideo()">Submit</button>
+
+    <script>
+        function submitVideo() {
+            const link = document.getElementById("videoLink").value;
+            db.collection("videos").add({ link: link })
+                .then(() => {
+                    alert("Video link uploaded successfully!");
+                    document.getElementById("videoLink").value = "";
+                })
+                .catch((error) => {
+                    console.error("Error uploading video: ", error);
+                });
+        }
+    </script>
+</body>
+
+</html>

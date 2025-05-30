@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Videos</title>
+</head>
+
+<body>
+    <h2>Watch Faculty Videos</h2>
+    <div id="videoContainer"></div>
+
+    <script>
+        db.collection("videos").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const videoLink = doc.data().link;
+                const iframe = document.createElement("iframe");
+                iframe.src = videoLink;
+                iframe.width = "640";
+                iframe.height = "480";
+                iframe.allow = "autoplay";
+                document.getElementById("videoContainer").appendChild(iframe);
+            });
+        });
+    </script>
+</body>
+
+</html>
