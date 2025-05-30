@@ -85,6 +85,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage.js"></script>
 
+    <script>
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        const auth = firebaseApp.auth();
+        const db = firebaseApp.firestore();
+        const storage = firebaseApp.storage();
+
+    </script>
+    <script src="login.js"></script>
 </head>
 
 <body>

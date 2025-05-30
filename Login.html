@@ -99,6 +99,7 @@
 </head>
 
 <body>
+    <script src="login.js"></script>
     <header>
         <h1>GIET Polytechnic College</h1>
         <nav>
@@ -115,12 +116,21 @@
     </header>
 
     <main>
-        <h1>Login</h1>
-        <form>
-            <input type="text" placeholder="Username" required />
-            <input type="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
+        <h2>Login / Signup</h2>
+
+        <input type="email" id="email" placeholder="Enter email"><br>
+        <input type="password" id="password" placeholder="Enter password"><br>
+
+        <select id="role">
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+        </select><br>
+
+        <button onclick="signup()">Sign Up</button>
+        <button onclick="login()">Log In</button>
+
+        <p id="msg"></p>
+
     </main>
 
     <footer>
