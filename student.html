@@ -75,20 +75,17 @@
 
                 // Embed logic
                 let embedCode = "";
-                if (video.link.includes("youtube.com")) {
-                    let videoIdMatch = video.link.match(/v=([^&]+)/);
-                    if (videoIdMatch && videoIdMatch[1]) {
-                        let videoId = videoIdMatch[1];
-                        embedCode = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-                    } else {
-                        embedCode = `<p>Invalid YouTube link</p>`;
-                    }
-                }else if (video.link.includes("drive.google.com")) {
+
+                if (video.link.includes("<iframe")) {
+                    // Case 1: Already iframe (YouTube embed code)
+                    embedCode = video.link;
+                } else if (video.link.includes("drive.google.com")) {
+                    // Case 2: Normal Google Drive file link
                     let fileId = video.link.match(/[-\w]{25,}/);
                     if (fileId) {
                         embedCode = `<iframe src="https://drive.google.com/file/d/${fileId[0]}/preview" allowfullscreen></iframe>`;
                     } else {
-                        embedCode = `<p>Invalid Drive link</p>`;
+                        embedCode = `<p>Invalid Google Drive link</p>`;
                     }
                 } else {
                     embedCode = `<p>Unsupported video link</p>`;
