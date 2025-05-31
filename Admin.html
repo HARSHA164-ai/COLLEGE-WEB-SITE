@@ -56,9 +56,9 @@
   <h2 style="margin-top: 50px;">Registered Users</h2>
   <input type="text" id="searchInput" placeholder="Search users..."
     style="padding:10px; width: 60%; margin-bottom: 20px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc;">
-  <button onclick="exportToCSV()"
-    style="margin-left: 20px; padding: 10px 16px; background: green; color: white; border: none; border-radius: 6px;">📋
-    Export Users to CSV</button>
+  <button onclick="exportToPDF()"
+    style="margin-top: 20px; padding: 10px 16px; background: #333; color: white; border: none; border-radius: 6px;">📝
+    Export Users to PDF</button>
 
 
 
@@ -215,20 +215,32 @@
         }
       }
     }
-    function exportToCSV() {
-      const users = window.exportUserList();
-      let csv = "Name,Email,Role\n";
+    async function exportToPDF() {
+      const users = window.exportUserList ? window.exportUserList() : [];
+      if (users.length === 0) {
+        alert("No users to export.");
+        return;
+      }
 
-      users.forEach(user => {
-        csv += `"${user.name}","${user.email}","${user.role}"\n`;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text("Registered Users", 10, 10);
+      doc.setFontSize(12);
+
+      let y = 20;
+      users.forEach((user, index) => {
+        doc.text(`${index + 1}. Name: ${user.name} | Email: ${user.email} | Role: ${user.role}`, 10, y);
+        y += 10;
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+        }
       });
 
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "user_list.csv";
-      link.click();
+      doc.save("user_list.pdf");
     }
+
 
 
   </script>
