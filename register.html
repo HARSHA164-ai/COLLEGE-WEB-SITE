@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Register - Giet Polytechnic</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Register</title>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Register</h2>
-        <form id="registerForm">
-            <input type="text" id="name" placeholder="Full Name" required><br>
-            <input type="email" id="email" placeholder="Email" required><br>
-            <input type="password" id="password" placeholder="Password" required><br>
-            <select id="role" required>
-                <option value="">Select Role</option>
-                <option value="student">Student</option>
-                <option value="faculty">Faculty</option>
-            </select><br>
-            <button type="submit">Register</button>
-        </form>
-        <p id="message"></p>
-    </div>
+    <h2>Register</h2>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js"></script>
+    <input type="email" id="email" placeholder="Email"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
 
-    <!-- Your Firebase Configuration -->
-    <script>
+    <label>Select Role:</label><br>
+    <input type="radio" name="role" value="faculty" checked> Faculty<br>
+    <input type="radio" name="role" value="student"> Student<br><br>
+
+    <button id="registerBtn">Register</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyB_wWNnD_1pvZuahffwDa8hCDje2Aru3B8",
             authDomain: "harshacollegewebsite.firebaseapp.com",
@@ -39,44 +30,31 @@
             messagingSenderId: "568331032925",
             appId: "1:568331032925:web:725cf04c75452c06ed70b4"
         };
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
 
-    <!-- Registration Script -->
-    <script>
-        const registerForm = document.getElementById('registerForm');
-        const message = document.getElementById('message');
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const role = document.getElementById('role').value;
+        document.getElementById("registerBtn").addEventListener("click", async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.querySelector('input[name="role"]:checked').value;
 
-            if (!name || !email || !password || !role) {
-                message.textContent = "Please fill in all fields.";
-                return;
-            }
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    return db.collection('users').doc(user.uid).set({
-                        name: name,
-                        email: email,
-                        role: role
-                    });
-                })
-                .then(() => {
-                    message.textContent = "Registration successful!";
-                    registerForm.reset();
-                })
-                .catch((error) => {
-                    message.textContent = error.message;
+                // Save role in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    role: role
                 });
+
+                alert("Registered successfully as " + role);
+                window.location.href = "login.html";
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
         });
     </script>
 </body>

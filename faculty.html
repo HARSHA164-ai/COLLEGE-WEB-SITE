@@ -4,9 +4,32 @@
   <title>Faculty Upload</title>
 </head>
 <body>
-  <h3>Upload Google Drive Video</h3>
-  <input type="text" id="videoLink" placeholder="https://drive.google.com/file/d/..." />
-  <button id="submitBtn">Submit</button>
-  <script type="module" src="faculty.js"></script>
+  <h2>Upload Video Link</h2>
+  <input type="text" id="videoLink" placeholder="Enter Google Drive video link">
+  <button id="uploadBtn">Upload</button>
+
+  <script type="module">
+    import { db } from './firebase.js';
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    document.getElementById("uploadBtn").addEventListener("click", async () => {
+      const link = document.getElementById("videoLink").value;
+
+      if (!link.includes("drive.google.com")) {
+        alert("Please enter a valid Google Drive link.");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "videos"), {
+          url: link
+        });
+        alert("Video link uploaded!");
+        document.getElementById("videoLink").value = "";
+      } catch (error) {
+        console.error("Error uploading video:", error);
+      }
+    });
+  </script>
 </body>
 </html>
