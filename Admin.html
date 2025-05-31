@@ -1,0 +1,75 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #444;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    input, select, button {
+      margin: 5px;
+      padding: 8px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    table, th, td {
+      border: 1px solid #999;
+    }
+    th, td {
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>👨‍💼 Admin Dashboard</h2>
+
+  <div class="section">
+    <h3>User Management</h3>
+    <input type="text" id="newUserEmail" placeholder="User Email">
+    <select id="newUserRole">
+      <option value="student">Student</option>
+      <option value="faculty">Faculty</option>
+    </select>
+    <button onclick="addUser()">Add User</button>
+
+    <h4>Users List:</h4>
+    <table id="userTable">
+      <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+      <!-- Data will be populated here -->
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Video Management</h3>
+    <h4>Videos List:</h4>
+    <table id="videoTable">
+      <tr>
+        <th>Video Link</th>
+        <th>Uploaded By</th>
+        <th>Action</th>
+      </tr>
+      <!-- Data will be populated here -->
+    </table>
+  </div>
+
+  <script src="firebase.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
