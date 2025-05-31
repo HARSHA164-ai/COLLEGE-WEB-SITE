@@ -3,19 +3,79 @@
 
 <head>
     <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .register-box input[type="text"],
+        .register-box input[type="email"],
+        .register-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .register-box label {
+            font-weight: bold;
+        }
+
+        .register-box button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .register-box button:hover {
+            background: #0056b3;
+        }
+
+        .roles {
+            margin: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Register</h2>
+    <div class="register-box">
+        <h2>Register</h2>
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
 
-    <input type="email" id="email" placeholder="Email"><br><br>
-    <input type="password" id="password" placeholder="Password"><br><br>
+        <div class="roles">
+            <label>Select Role:</label><br>
+            <input type="radio" name="role" value="faculty" checked> Faculty
+            <input type="radio" name="role" value="student"> Student
+        </div>
 
-    <label>Select Role:</label><br>
-    <input type="radio" name="role" value="faculty" checked> Faculty<br>
-    <input type="radio" name="role" value="student"> Student<br><br>
-
-    <button id="registerBtn">Register</button>
+        <button id="registerBtn">Register</button>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -36,16 +96,23 @@
         const db = getFirestore(app);
 
         document.getElementById("registerBtn").addEventListener("click", async () => {
+            const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const role = document.querySelector('input[name="role"]:checked').value;
+
+            if (!name || !email || !password) {
+                alert("Please fill all fields!");
+                return;
+            }
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Save role in Firestore
+                // Save name and role in Firestore
                 await setDoc(doc(db, "users", user.uid), {
+                    name: name,
                     email: email,
                     role: role
                 });
