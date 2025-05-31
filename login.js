@@ -1,8 +1,7 @@
-<script>
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-    function signup() {
+  function signup() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const role = document.getElementById("role").value;
@@ -11,10 +10,10 @@
       .then(userCredential => {
         const user = userCredential.user;
 
-    // Save role to Firestore
-    return db.collection("users").doc(user.uid).set({
-        email: email,
-    role: role
+        // Save role to Firestore
+        return db.collection("users").doc(user.uid).set({
+          email: email,
+          role: role
         });
       })
       .then(() => {
@@ -25,7 +24,7 @@
       });
   }
 
-    function login() {
+  function login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -37,13 +36,13 @@
         db.collection("users").doc(user.uid).get().then(doc => {
           if (doc.exists) {
             const role = doc.data().role;
-    if (role === "faculty") {
-        window.location.href = "faculty.html";
+            if (role === "faculty") {
+              window.location.href = "faculty.html";
             } else {
-        window.location.href = "student.html";
+              window.location.href = "student.html";
             }
           } else {
-        document.getElementById("msg").innerText = "No role found.";
+            document.getElementById("msg").innerText = "No role found.";
           }
         });
       })
@@ -51,4 +50,4 @@
         document.getElementById("msg").innerText = error.message;
       });
   }
-</script>
+
