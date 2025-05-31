@@ -78,7 +78,8 @@
                 if (video.link.includes("youtube.com")) {
                     const videoId = video.link.split("v=")[1];
                     embedCode = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-                } else if (video.link.includes("drive.google.com")) {
+                }
+                else if (video.link.includes("drive.google.com")) {
                     let fileId = video.link.match(/[-\w]{25,}/);
                     if (fileId) {
                         embedCode = `<iframe src="https://drive.google.com/file/d/${fileId[0]}/preview" allowfullscreen></iframe>`;
