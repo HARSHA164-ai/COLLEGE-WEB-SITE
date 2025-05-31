@@ -1,35 +1,114 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Faculty Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .upload-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+
+    .upload-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .upload-box input,
+    .upload-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .upload-box button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .upload-box button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>Upload Video Link</h2>
-  <input type="text" id="videoLink" placeholder="Enter Google Drive video link">
-  <button id="uploadBtn">Upload</button>
+  <div class="upload-box">
+    <h2>Upload Video</h2>
+    <input type="text" id="title" placeholder="Video Title"><br>
+    <textarea id="link" placeholder="Paste YouTube or Google Drive Link"></textarea><br>
+    <button id="uploadBtn">Upload</button>
+  </div>
 
   <script type="module">
-    import { db } from './firebase.js';
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_wWNnD_1pvZuahffwDa8hCDje2Aru3B8",
+      authDomain: "harshacollegewebsite.firebaseapp.com",
+      projectId: "harshacollegewebsite",
+      storageBucket: "harshacollegewebsite.firebasestorage.app",
+      messagingSenderId: "568331032925",
+      appId: "1:568331032925:web:725cf04c75452c06ed70b4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
     document.getElementById("uploadBtn").addEventListener("click", async () => {
-      const link = document.getElementById("videoLink").value;
+      const title = document.getElementById("title").value;
+      const link = document.getElementById("link").value;
 
-      if (!link.includes("drive.google.com")) {
-        alert("Please enter a valid Google Drive link.");
+      if (!title || !link) {
+        alert("Please enter title and link.");
         return;
       }
 
-      try {
-        await addDoc(collection(db, "videos"), {
-          url: link
-        });
-        alert("Video link uploaded!");
-        document.getElementById("videoLink").value = "";
-      } catch (error) {
-        console.error("Error uploading video:", error);
-      }
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            await addDoc(collection(db, "videos"), {
+              title: title,
+              link: link,
+              uploadedBy: user.uid,
+              createdAt: serverTimestamp()
+            });
+
+            alert("Video uploaded successfully!");
+            document.getElementById("title").value = "";
+            document.getElementById("link").value = "";
+          } catch (err) {
+            alert("Upload failed: " + err.message);
+          }
+        } else {
+          alert("You must be logged in.");
+        }
+      });
     });
   </script>
 </body>
+
 </html>
