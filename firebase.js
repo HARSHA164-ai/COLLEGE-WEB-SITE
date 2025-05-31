@@ -6,12 +6,12 @@ import { getFirestore, collection, addDoc } from "https://www.gstatic.com/fireba
 
 // Your Firebase config
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB_wWNnD_1pvZuahffwDa8hCDje2Aru3B8",
+  authDomain: "harshacollegewebsite.firebaseapp.com",
+  projectId: "harshacollegewebsite",
+  storageBucket: "harshacollegewebsite.firebasestorage.app",
+  messagingSenderId: "568331032925",
+  appId: "1:568331032925:web:725cf04c75452c06ed70b4"
 };
 
 // Initialize Firebase
