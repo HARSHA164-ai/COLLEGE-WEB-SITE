@@ -83,6 +83,10 @@
     <button id="uploadBtn">Upload</button>
   </div>
 
+  <div class="upload-box">
+    <button onclick="logout()">Logout</button>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -132,6 +136,21 @@
       });
     });
   </script>
+  <script>
+        function logout() {
+            import('./firebase.js').then(({ auth }) => {
+                import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js')
+                    .then(({ signOut }) => {
+                        signOut(auth).then(() => {
+                            window.location.href = "index.html";
+                        });
+                    });
+            });
+        }
+
+
+
+    </script>
 </body>
 
 </html>
