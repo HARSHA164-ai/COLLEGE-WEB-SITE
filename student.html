@@ -40,11 +40,50 @@
             border: none;
             border-radius: 10px;
         }
+
+        .upload-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+
+    .upload-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .upload-box input,
+    .upload-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .upload-box button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .upload-box button:hover {
+      background: #0056b3;
+    }
     </style>
 </head>
 
 <body>
-    <button onclick="logout()">Logout</button>
+    <div class="upload-box">
+        <button onclick="logout()">Logout</button>
+    </div>
 
     <h2>Faculty Uploaded Videos</h2>
     <div class="video-grid" id="videoList"></div>
